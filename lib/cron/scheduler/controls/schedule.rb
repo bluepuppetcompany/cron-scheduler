@@ -37,6 +37,7 @@ module Cron
           end
           schedule "* * * * *", Foo
           schedule "* * * * *", Bar.new
+          schedule "43 * * * *", -> { logger.info { "Hourly!" } }
         end
       end
     end

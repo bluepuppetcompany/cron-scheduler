@@ -2,6 +2,7 @@ require 'actor'
 require 'clock'
 require 'dependency'
 require 'log'
+require 'parse-cron'
 
 require 'cron/scheduler/log'
 require 'cron/scheduler/task'
