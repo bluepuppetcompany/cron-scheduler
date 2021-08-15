@@ -39,6 +39,16 @@ module Cron
 
         logger.debug(tag: :tick) { "Tick!" }
 
+        return :next unless near_zero_seconds?(timestamp)
+
+        dispatch = Dispatch.new(timestamp)
+
+        send.(dispatch, address)
+      end
+
+      handle :dispatch do |dispatch|
+        logger.trace(tag: :heartbeat) { "Heartbeat!" }
+
         :next
       end
 
@@ -50,6 +60,10 @@ module Cron
 
       def near_second?(timestamp)
         timestamp.usec < THRESHOLD_NEAR_ZERO
+      end
+
+      def near_zero_seconds?(timestamp)
+        timestamp.sec == 0
       end
 
       def elapsed?(timestamp)
