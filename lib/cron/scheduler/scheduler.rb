@@ -16,8 +16,8 @@ module Cron
 
           logger.trace(tag: :scheduler) { "Starting tasks..." }
 
-          self.class.task_registry.each do |cron_expression, callable|
-            task_address = Task.start(cron_expression, callable)
+          self.class.task_registry.each do |cron_expression, callable, block|
+            task_address = Task.start(self, cron_expression, callable, &block)
 
             self.tasks << task_address
           end
@@ -29,6 +29,10 @@ module Cron
 
         handle :dispatch do |dispatch|
           logger.trace(tag: :scheduler) { "Dispatching tasks... (Timestamp: #{dispatch.timestamp})"}
+
+          tasks.each do |task_address|
+            send.(dispatch, task_address)
+          end
 
           logger.debug(tag: :scheduler) { "Dispatch tasks. (Timestamp: #{dispatch.timestamp})"}
         end

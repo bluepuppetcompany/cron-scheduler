@@ -1,8 +1,8 @@
 module Cron
   module Scheduler
     module ScheduleMacro
-      def schedule_macro(cron_expression, callable)
-        task_registry.register(cron_expression, callable)
+      def schedule_macro(cron_expression, callable=nil, &block)
+        task_registry.register(cron_expression, callable, &block)
       end
       alias schedule schedule_macro
 
