@@ -12,11 +12,16 @@ module Cron
       TICK_DELTA = 0.01
 
       attr_accessor :last_tick
+      attr_reader :scheduler_address
 
       dependency :clock, Clock::UTC
 
-      def self.build
-        instance = new
+      def initialize(scheduler_address)
+        @scheduler_address = scheduler_address
+      end
+
+      def self.build(scheduler_address)
+        instance = new(scheduler_address)
         instance.configure
         instance
       end
@@ -48,6 +53,8 @@ module Cron
 
       handle :dispatch do |dispatch|
         logger.trace(tag: :heartbeat) { "Heartbeat!" }
+
+        send.(dispatch, scheduler_address)
 
         :next
       end

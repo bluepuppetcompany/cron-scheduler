@@ -26,7 +26,7 @@ module Cron
 
           logger.trace(tag: :scheduler) { "Starting timer..." }
 
-          Timer.start
+          Timer.start(address)
 
           logger.debug(tag: :scheduler) { "Started timer." }
 
