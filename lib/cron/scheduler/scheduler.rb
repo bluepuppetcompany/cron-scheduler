@@ -24,6 +24,12 @@ module Cron
 
           logger.debug(tag: :scheduler) { "Started tasks." }
 
+          logger.trace(tag: :scheduler) { "Starting timer..." }
+
+          Timer.start
+
+          logger.debug(tag: :scheduler) { "Started timer." }
+
           logger.debug(tag: :scheduler) { "Started scheduler. (#{Process.pid})" }
         end
 
