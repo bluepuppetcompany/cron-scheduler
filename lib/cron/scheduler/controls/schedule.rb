@@ -9,7 +9,7 @@ module Cron
         class Example
           include Cron::Scheduler
 
-          # schedule "* * * * *", -> { logger.info { "Hello, world!" } }
+          schedule "* * * * *", -> { logger.info { "Hello, world!" } }
         end
       end
     end
